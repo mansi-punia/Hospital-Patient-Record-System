@@ -1,1 +1,1 @@
-# Hospital-Patient-Record-System
+# HospitalPatientRecordSystem
