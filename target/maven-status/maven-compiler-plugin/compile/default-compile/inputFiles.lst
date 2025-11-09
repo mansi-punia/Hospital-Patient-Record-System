@@ -11,7 +11,7 @@ C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\reco
 C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\records\Ward.java
 C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\staff\Doctor.java
 C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\staff\Nurse.java
-C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\utils\AddException.java
+C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\utils\AppException.java
 C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\utils\DataFormatException.java
 C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\utils\FileManager.java
 C:\Users\asus\Desktop\Hospital_Patient_Record_System\src\main\java\com\hosp\utils\Validation.java

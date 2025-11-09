@@ -39,7 +39,13 @@ public class HospitalSystem
     {
         // doctors
         doctors.add(new Doctor("D001", "Dr. Saksham", "General Medicine", "9876543210", true));
-        doctors.add(new Doctor("D002", "Dr. Asha", "Cardiology", "9123456780", true));
+        doctors.add(new Doctor("D002", "Dr. Asha", "Cardiology", "9876501234", true));
+        doctors.add(new Doctor("D003", "Dr. Meena", "Pediatrics", "9876512345", true));
+        doctors.add(new Doctor("D004", "Dr. Rohan", "Neurology", "9876523456", false));
+        doctors.add(new Doctor("D005", "Dr. Priya", "Orthopedics", "9876534567", true));
+        doctors.add(new Doctor("D006", "Dr. Karan", "Dermatology", "9876545678", false));
+        doctors.add(new Doctor("D007", "Dr. Neha", "Gastroenterology", "9876556789", true));
+        doctors.add(new Doctor("D008", "Dr. Rahul", "Psychiatry", "9876567890", true));
 
         // nurses
         nurses.add(new Nurse("N001", "Nurse Rina", "9998887776"));
@@ -197,22 +203,32 @@ public class HospitalSystem
 
     private void processNextER() 
     {
-        EmergencyRoom.ERPatient ep = er.nextToProcess();
-        if (ep == null) { System.out.println("No ER patients waiting"); return; }
-        System.out.println("Processing ER patient: " + ep.patientId + " severity: " + ep.severity);
-        boolean needsICU = ep.severity >= 8;
-        RoomManager.AssignedBed ab = roomManager.findAndAssignBed(ep.patientId, needsICU);
-        Optional<Patient> opt = patients.stream().filter(p -> p.getId().equals(ep.patientId)).findFirst();
-        if (opt.isPresent() && ab != null) {
-            Patient p = opt.get();
-            if (p instanceof InPatient) ((InPatient)p).setAssignedBedId(ab.bed.getBedId());
-            System.out.println("Assigned bed: " + ab);
-        } else if (ab == null) {
-            System.out.println("No suitable bed. Keep patient in ER waiting or arrange transfer.");
-        } else {
-            System.out.println("No patient object found for id: " + ep.patientId);
-        }
+    EmergencyRoom.ERPatient peek = er.peekNext();
+    if (peek == null) {
+        System.out.println("No ER patients waiting");
+        return;
     }
+    System.out.println("Next patient in ER queue is: " + peek.patientId + " (Severity: " + peek.severity + ")");
+    EmergencyRoom.ERPatient ep = er.nextToProcess();
+    if (ep == null) { // unlikely because we peeked, but safe
+        System.out.println("No ER patients waiting");
+        return;
+    }
+    System.out.println("Processing ER patient: " + ep.patientId + " severity: " + ep.severity);
+    boolean needsICU = ep.severity >= 8;
+    RoomManager.AssignedBed ab = roomManager.findAndAssignBed(ep.patientId, needsICU);
+    Optional<Patient> opt = patients.stream().filter(p -> p.getId().equals(ep.patientId)).findFirst();
+    if (opt.isPresent() && ab != null) {
+        Patient p = opt.get();
+        if (p instanceof InPatient) ((InPatient)p).setAssignedBedId(ab.bed.getBedId());
+        System.out.println("Assigned bed: " + ab);
+    } else if (ab == null) {
+        System.out.println("No suitable bed. Keep patient in ER waiting or arrange transfer.");
+    } else {
+        System.out.println("No patient object found for id: " + ep.patientId);
+    }
+    }
+
 
     private void dischargePatientInteractive() 
     {
